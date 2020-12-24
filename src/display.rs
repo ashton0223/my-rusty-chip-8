@@ -4,6 +4,7 @@ use std::sync::{Arc, Mutex};
 use std::time::{Instant, Duration};
 use std::thread;
 
+use std::process;
 
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
@@ -32,14 +33,14 @@ pub fn start_display(mutex: Arc<Mutex<[[bool; 32]; 64]>>, keys_mutex: Arc<Mutex<
 
         canvas.present();
     
-        'display: loop {
+        loop {
             let start = Instant::now();
             let mut key_data = keys_mutex.lock().unwrap();
             for event in event_pump.poll_iter() {
                 match event {
                     Event::Quit {..} |
                     Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
-                        break 'display
+                        process::exit(0);
                     }
                     Event::KeyDown { keycode: key,.. } => {
                         match key {
