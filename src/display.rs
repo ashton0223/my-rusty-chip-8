@@ -91,7 +91,7 @@ pub fn start_display(mutex: Arc<Mutex<[[bool; 32]; 64]>>, keys_mutex: Arc<Mutex<
                             Some(Keycode::V) => {
                                 key_data[0xF] = true;
                             }
-                            _ => { println!("Key is {:?}", key)}
+                            _ => {}
                         }
                     }
                     Event::KeyUp { keycode: key, .. } => {
@@ -144,7 +144,7 @@ pub fn start_display(mutex: Arc<Mutex<[[bool; 32]; 64]>>, keys_mutex: Arc<Mutex<
                             Some(Keycode::V) => {
                                 key_data[0xF] = false;
                             }
-                            _ => { println!("Key is {:?}", key)}
+                            _ => {}
                         }
                     }
                     _ => {}

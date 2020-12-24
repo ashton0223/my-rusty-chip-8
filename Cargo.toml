@@ -1,5 +1,5 @@
 [package]
-name = "chip8"
+name = "my-rusty-chip-8"
 version = "0.1.0"
 authors = ["ashton0223 <30986310+ashton0223@users.noreply.github.com>"]
 edition = "2018"
