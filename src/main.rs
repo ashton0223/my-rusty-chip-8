@@ -3,8 +3,11 @@ mod display;
 mod timers;
 
 use std::sync::{Arc, Mutex};
-use std::env;
 use std::process;
+
+extern crate nfd;
+
+use nfd::Response;
 
 fn main() {
     let display_mutex = Arc::new(
@@ -41,12 +44,14 @@ fn main() {
     let sound_mutex_copy = Arc::clone(&sound_mutex);
     timers::start_timers(delay_mutex_copy, sound_mutex_copy);
 
-    let args: Vec<String> = env::args().collect();
-    if args.len() != 2 {
-        println!("Usage: {} [ROM]", args[0]);
-        process::exit(1);
+    let result = nfd::open_file_dialog(None, None).unwrap_or_else(|e| {
+        panic!("{}", e);
+    });
+  
+    match result {
+        Response::Okay(file_path) => processor.load_program(file_path),
+        Response::OkayMultiple(e) => println!("{:?}", e), // This shouldn't happen
+        Response::Cancel => process::exit(1),
     }
-    let rom = args[1].clone();
-    processor.load_program(rom);
     processor.run_program();
 }
